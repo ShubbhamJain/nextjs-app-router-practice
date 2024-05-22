@@ -33,11 +33,13 @@ export default function ProfilePic({ text }: { text: string }) {
     setColorIndex(index);
   }, []);
 
-  return (
+  return colorIndex > -1 ? (
     <div
       className={`flex items-center justify-center uppercase w-[30px] h-[30px] rounded-[50%] ${colorSet[colorIndex]?.bg} ${colorSet[colorIndex]?.border}`}
     >
       {text}
     </div>
+  ) : (
+    <div className="w-[30px] h-[30px] bg-slate-400 rounded-[50%] animate-pulse"></div>
   );
 }
