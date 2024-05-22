@@ -1,8 +1,6 @@
-// import { useAuthContext } from "@/context/auth";
-// import { APIResponseType, CommentsWithUserName } from "@/utils/types";
-
 import type { Metadata } from "next";
 
+import { getSession } from "@/server/auth";
 import { fetchComments } from "@/server/comments";
 
 import CommentsList from "@/components/Comments";
@@ -13,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  //   const { auth } = useAuthContext();
+  const session = await getSession();
   const comments = await fetchComments();
 
   return (
@@ -22,10 +20,9 @@ export default async function Page() {
         Upvote comments or Express yourself!
       </p>
 
-      {/* {auth.isLoggedIn && <CommentInput />} */}
-      <CommentInput />
+      {session?.loggedIn && <CommentInput session={session} />}
 
-      {comments ? <CommentsList comments={comments} /> : null}
+      {comments ? <CommentsList comments={comments} session={session} /> : null}
     </>
   );
 }

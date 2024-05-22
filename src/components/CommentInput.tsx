@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 
+import { TokenPayload } from "@/utils/types";
+
 import { addComment } from "@/server/comments";
-// import { useAuthContext } from "@/context/auth";
 
-export default function CommentInput() {
-  //   const router = useRouter();
-  //   const {
-  //     auth: { user },
-  //   } = useAuthContext();
-
+export default function CommentInput({
+  session,
+}: {
+  session: TokenPayload | null;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
@@ -23,7 +23,7 @@ export default function CommentInput() {
         ref={formRef}
         className="contents"
         action={(formData) => {
-          addComment(formData);
+          addComment(formData, session!.id);
           formRef.current?.reset();
         }}
       >

@@ -2,7 +2,7 @@ export type Comments = {
   id: number;
   content: string;
   likes: number;
-  // userId: number;
+  userId: number;
 };
 
 export type CommentsWithUserName = Comments & { userName: string };
@@ -20,11 +20,16 @@ export type User = {
   loggedIn: boolean;
 };
 
+export type TokenPayload = User & {
+  iat: number;
+  exp: number;
+};
+
 export type AuthContextType = {
   auth: {
-    isLoggedIn: boolean;
+    loggedIn: boolean;
     user: User | null;
   };
-  setAuth: (value: { isLoggedIn: boolean; user: User | null }) => void;
+  setAuth: (value: { loggedIn: boolean; user: User | null }) => void;
   logout: (id: number) => void;
 };

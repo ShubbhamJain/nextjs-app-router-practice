@@ -1,12 +1,15 @@
-// import { useAuthContext } from "@/context/auth";
-import { Comments } from "@/utils/types";
+import { Comments, TokenPayload } from "@/utils/types";
 
 import ProfilePic from "./ProfilePic";
 import SubmitButton from "./SubmitButton";
 
-export default function CommentsList({ comments }: { comments: Comments[] }) {
-  // const { auth } = useAuthContext();
-
+export default function CommentsList({
+  comments,
+  session,
+}: {
+  comments: Comments[];
+  session: TokenPayload | null;
+}) {
   return (
     <div className="flex flex-col gap-7 mx-auto w-full sm:w-[50%] md:w-[40%] h-[400px]">
       {comments?.map((comment, key) => (
@@ -19,18 +22,12 @@ export default function CommentsList({ comments }: { comments: Comments[] }) {
 
             <div className="flex items-center gap-5">
               <p>{comment.likes ?? 0}</p>
-              {/* {auth.isLoggedIn && (
-                <button
-                  disabled={isLoading || isPending}
-                  onClick={() => upVoteComment(comment.id, comment.likes ?? 0)}
-                >
-                  <Image height={20} src={LikeButton} alt="like-button" />
-                </button>
-              )} */}
-              <SubmitButton
-                commentId={comment.id}
-                commentLikes={comment.likes}
-              />
+              {session?.loggedIn && (
+                <SubmitButton
+                  commentId={comment.id}
+                  commentLikes={comment.likes}
+                />
+              )}
             </div>
           </div>
           <hr />

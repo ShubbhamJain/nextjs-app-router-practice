@@ -1,16 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
 
-// import { useAuthContext } from "@/context/auth";
+import { getSession } from "@/server/auth";
 
-// import SignUp from "@/components/SignUp";
-// import UserAvatar from "@/components/UserAvatar";
+import SignUp from "@/components/SignUp";
+import UserAvatar from "@/components/UserAvatar";
 
 import ChevronRight from "@/assets/chevronright.svg";
 import ChevronUpDown from "@/assets/chevronupdown.svg";
 
-export function Header() {
-  //   const { auth } = useAuthContext();
+export async function Header() {
+  const session = await getSession();
+
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center py-4 px-6">
       <Link href={"/"}>
@@ -21,8 +22,8 @@ export function Header() {
       </Link>
 
       <div className="flex gap-3 items-center">
-        {/* {!auth.isLoggedIn && <SignUp />}
-        {auth.isLoggedIn && <UserAvatar />} */}
+        {!session?.loggedIn && <SignUp />}
+        {!!session?.loggedIn && <UserAvatar session={session} />}
 
         <Link href={"/about"} as={"/about"}>
           <button className="flex items-center gap-3 bg-blue-500 text-white rounded-lg p-2 hover:scale-[105%] transition-all">

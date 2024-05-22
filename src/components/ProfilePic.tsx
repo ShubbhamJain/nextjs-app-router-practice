@@ -40,6 +40,6 @@ export default function ProfilePic({ text }: { text: string }) {
       {text}
     </div>
   ) : (
-    <div className="w-[30px] h-[30px] bg-slate-400 rounded-[50%] animate-pulse"></div>
+    <div className="w-[30px] h-[30px] bg-slate-300 rounded-[50%] animate-pulse"></div>
   );
 }
